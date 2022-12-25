@@ -87,7 +87,7 @@ body {
           border: 1px rgba($color: $black-1, $alpha: 0.2) solid;
         }
 
-        @for $i from 0 through 10 {
+        @for $i from 0 through 5 {
           [class*="reveal-"]:nth-child(#{$i + 1}) {
             animation-delay: $i * 0.2s, $i * 0.2s;
           }
