@@ -1,0 +1,16 @@
+$white: white;
+$white-1: #fafafa;
+$white-2: #f5f5f5;
+$white-3: #f0f0f0;
+$black: black;
+$black-1: #050505;
+$black-2: #0A0A0A;
+$gray: rgb(93, 93, 93);
+$stable: rgb(0, 128, 81);
+$warn: rgb(255, 179, 0);
+
+@mixin generateNeumorphism($background, $shadow1, $shadow2, $borderRadius) {
+  background: $background;
+  border-radius: $borderRadius;
+  box-shadow: inset 9.91px 9.91px 15px $shadow1, inset -9.91px -9.91px 15px $shadow2;
+}

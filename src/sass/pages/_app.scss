@@ -1,0 +1,184 @@
+nav {
+  background-color: $white;
+  text-align: center;
+  padding: 15px 0;
+
+  a {
+    color: $black-1;
+    font-size: small;
+    text-decoration: none;
+  }
+}
+
+body {
+  background-color: $white-1;
+}
+
+#keyboard {
+  margin-top: 20px;
+
+  .container {
+    .wrapper {
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+
+
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+
+        .key {
+          width: calc(100%/11);
+          aspect-ratio: 1/1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: $white;
+          border-radius: 3px;
+          border: 1px rgba($color: $black-1, $alpha: 0.2) solid;
+          transition: 0.1s ease;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $black-1;
+            color: $white-1;
+          }
+        }
+
+        .enter {
+          width: 17%;
+          aspect-ratio: unset;
+        }
+
+        .del {
+          width: 10%;
+          aspect-ratio: unset;
+        }
+
+      }
+
+    }
+  }
+}
+
+#guesses-stack {
+  padding: 30px 0;
+
+  .container {
+    .wrapper {
+
+      .guess-stack {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+
+        .box {
+          background-color: $white-1;
+          color: $black-1;
+          width: calc(100%/6);
+          aspect-ratio: 1/1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 7%;
+          border: 1px rgba($color: $black-1, $alpha: 0.2) solid;
+        }
+
+        @for $i from 0 through 10 {
+          [class*="reveal-"]:nth-child(#{$i + 1}) {
+            animation-delay: $i * 0.2s, $i * 0.2s;
+          }
+        }
+
+        .reveal-right-place {
+          animation: flip .7s, revealRightPlaceColor .7s forwards;
+        }
+
+        .reveal-wrong-place {
+          animation: flip .7s, revealWrongPlaceColor .7s forwards;
+        }
+
+        .reveal-no-place {
+          animation: flip .7s, revealNoPlaceColor .7s forwards;
+        }
+
+        @keyframes revealRightPlaceColor {
+          from {
+            background-color: $white-2;
+            color: $black-1;
+          }
+
+          47% {
+            background-color: $white-2;
+            color: $black-1;
+          }
+
+          50% {
+            background-color: $stable;
+            color: $white-1;
+          }
+
+          to {
+            background-color: $stable;
+            color: $white-1;
+          }
+        }
+
+        @keyframes revealWrongPlaceColor {
+          from {
+            background-color: $white-2;
+            color: $black-1;
+          }
+
+          47% {
+            background-color: $white-2;
+            color: $black-1;
+          }
+
+          50% {
+            background-color: $warn;
+            color: $white-1;
+          }
+
+          to {
+            background-color: $warn;
+            color: $white-1;
+          }
+        }
+
+        @keyframes revealNoPlaceColor {
+          from {
+            background-color: $white-2;
+            color: $black-1;
+          }
+
+          47% {
+            background-color: $white-2;
+            color: $black-1;
+          }
+
+          50% {
+            background-color: $gray;
+            color: $white-1;
+          }
+
+          to {
+            background-color: $gray;
+            color: $white-1;
+          }
+        }
+
+        @keyframes flip {
+          from {
+            transform: rotateY(360deg);
+          }
+        }
+
+      }
+
+    }
+  }
+}

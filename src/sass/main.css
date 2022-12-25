@@ -1,0 +1,352 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap");
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  font-size: small;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* For smaller screens: */
+[class*=col-] {
+  width: 100%;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+/* BREAK POINTS */
+@media only screen and (min-width: 768px) {
+  /* For Larger Screens: */
+  .container {
+    margin: auto;
+    max-width: 1100px;
+  }
+  .col-1 {
+    width: 8.33%;
+  }
+  .col-2 {
+    width: 16.66%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-4 {
+    width: 33.33%;
+  }
+  .col-5 {
+    width: 41.66%;
+  }
+  .col-6 {
+    width: 50%;
+  }
+  .col-7 {
+    width: 58.33%;
+  }
+  .col-8 {
+    width: 66.66%;
+  }
+  .col-9 {
+    width: 75%;
+  }
+  .col-10 {
+    width: 83.33%;
+  }
+  .col-11 {
+    width: 91.66%;
+  }
+  .col-12 {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  /* For Medium Screens (Tablet): */
+  .col-s-1 {
+    width: 8.33%;
+  }
+  .col-s-2 {
+    width: 16.66%;
+  }
+  .col-s-3 {
+    width: 25%;
+  }
+  .col-s-4 {
+    width: 33.33%;
+  }
+  .col-s-5 {
+    width: 41.66%;
+  }
+  .col-s-6 {
+    width: 50%;
+  }
+  .col-s-7 {
+    width: 58.33%;
+  }
+  .col-s-8 {
+    width: 66.66%;
+  }
+  .col-s-9 {
+    width: 75%;
+  }
+  .col-s-10 {
+    width: 83.33%;
+  }
+  .col-s-11 {
+    width: 91.66%;
+  }
+  .col-s-12 {
+    width: 100%;
+  }
+}
+nav {
+  background-color: white;
+  text-align: center;
+  padding: 15px 0;
+}
+nav a {
+  color: #050505;
+  font-size: small;
+  text-decoration: none;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+#keyboard {
+  margin-top: 20px;
+}
+#keyboard .container .wrapper .row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+#keyboard .container .wrapper .row:not(:first-child) {
+  margin-top: 10px;
+}
+#keyboard .container .wrapper .row .key {
+  width: 9.0909090909%;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 3px;
+  border: 1px rgba(5, 5, 5, 0.2) solid;
+  transition: 0.1s ease;
+  cursor: pointer;
+}
+#keyboard .container .wrapper .row .key:hover {
+  background-color: #050505;
+  color: #fafafa;
+}
+#keyboard .container .wrapper .row .enter {
+  width: 17%;
+  aspect-ratio: unset;
+}
+#keyboard .container .wrapper .row .del {
+  width: 10%;
+  aspect-ratio: unset;
+}
+
+#guesses-stack {
+  padding: 30px 0;
+}
+#guesses-stack .container .wrapper .guess-stack {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+#guesses-stack .container .wrapper .guess-stack .box {
+  background-color: #fafafa;
+  color: #050505;
+  width: 16.6666666667%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7%;
+  border: 1px rgba(5, 5, 5, 0.2) solid;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(1) {
+  -webkit-animation-delay: 0s, 0s;
+          animation-delay: 0s, 0s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(2) {
+  -webkit-animation-delay: 0.2s, 0.2s;
+          animation-delay: 0.2s, 0.2s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(3) {
+  -webkit-animation-delay: 0.4s, 0.4s;
+          animation-delay: 0.4s, 0.4s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(4) {
+  -webkit-animation-delay: 0.6s, 0.6s;
+          animation-delay: 0.6s, 0.6s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(5) {
+  -webkit-animation-delay: 0.8s, 0.8s;
+          animation-delay: 0.8s, 0.8s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(6) {
+  -webkit-animation-delay: 1s, 1s;
+          animation-delay: 1s, 1s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(7) {
+  -webkit-animation-delay: 1.2s, 1.2s;
+          animation-delay: 1.2s, 1.2s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(8) {
+  -webkit-animation-delay: 1.4s, 1.4s;
+          animation-delay: 1.4s, 1.4s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(9) {
+  -webkit-animation-delay: 1.6s, 1.6s;
+          animation-delay: 1.6s, 1.6s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(10) {
+  -webkit-animation-delay: 1.8s, 1.8s;
+          animation-delay: 1.8s, 1.8s;
+}
+#guesses-stack .container .wrapper .guess-stack [class*=reveal-]:nth-child(11) {
+  -webkit-animation-delay: 2s, 2s;
+          animation-delay: 2s, 2s;
+}
+#guesses-stack .container .wrapper .guess-stack .reveal-right-place {
+  -webkit-animation: flip 0.7s, revealRightPlaceColor 0.7s forwards;
+          animation: flip 0.7s, revealRightPlaceColor 0.7s forwards;
+}
+#guesses-stack .container .wrapper .guess-stack .reveal-wrong-place {
+  -webkit-animation: flip 0.7s, revealWrongPlaceColor 0.7s forwards;
+          animation: flip 0.7s, revealWrongPlaceColor 0.7s forwards;
+}
+#guesses-stack .container .wrapper .guess-stack .reveal-no-place {
+  -webkit-animation: flip 0.7s, revealNoPlaceColor 0.7s forwards;
+          animation: flip 0.7s, revealNoPlaceColor 0.7s forwards;
+}
+@-webkit-keyframes revealRightPlaceColor {
+  from {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  47% {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  50% {
+    background-color: rgb(0, 128, 81);
+    color: #fafafa;
+  }
+  to {
+    background-color: rgb(0, 128, 81);
+    color: #fafafa;
+  }
+}
+@keyframes revealRightPlaceColor {
+  from {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  47% {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  50% {
+    background-color: rgb(0, 128, 81);
+    color: #fafafa;
+  }
+  to {
+    background-color: rgb(0, 128, 81);
+    color: #fafafa;
+  }
+}
+@-webkit-keyframes revealWrongPlaceColor {
+  from {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  47% {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  50% {
+    background-color: rgb(255, 179, 0);
+    color: #fafafa;
+  }
+  to {
+    background-color: rgb(255, 179, 0);
+    color: #fafafa;
+  }
+}
+@keyframes revealWrongPlaceColor {
+  from {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  47% {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  50% {
+    background-color: rgb(255, 179, 0);
+    color: #fafafa;
+  }
+  to {
+    background-color: rgb(255, 179, 0);
+    color: #fafafa;
+  }
+}
+@-webkit-keyframes revealNoPlaceColor {
+  from {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  47% {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  50% {
+    background-color: rgb(93, 93, 93);
+    color: #fafafa;
+  }
+  to {
+    background-color: rgb(93, 93, 93);
+    color: #fafafa;
+  }
+}
+@keyframes revealNoPlaceColor {
+  from {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  47% {
+    background-color: #f5f5f5;
+    color: #050505;
+  }
+  50% {
+    background-color: rgb(93, 93, 93);
+    color: #fafafa;
+  }
+  to {
+    background-color: rgb(93, 93, 93);
+    color: #fafafa;
+  }
+}
+@-webkit-keyframes flip {
+  from {
+    transform: rotateY(360deg);
+  }
+}
+@keyframes flip {
+  from {
+    transform: rotateY(360deg);
+  }
+}/*# sourceMappingURL=main.css.map */
