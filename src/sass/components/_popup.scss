@@ -1,0 +1,91 @@
+.popup {
+  background-color: $black-1;
+  position: fixed;
+  left: 50%;
+  top: 100px;
+  transform: translate(-50%);
+  box-shadow: 1px 1px 3px $gray;
+  animation: popupAnim 3s forwards ease;
+
+  @keyframes popupAnim {
+    from {
+      width: 0;
+      padding: 10px 0 10px 0;
+      opacity: 0;
+      white-space: nowrap;
+    }
+
+    10% {
+      opacity: 100%;
+      width: 400px;
+      padding: 10px 45px 10px 20px;
+      border-radius: 5px;
+    }
+
+    70% {
+      white-space: pre-wrap;
+    }
+
+    90% {
+      opacity: 100%;
+      width: 400px;
+      padding: 10px 45px 10px 20px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+
+    to {
+      opacity: 0;
+      width: 0;
+      padding: 10px 0 10px 0;
+      white-space: nowrap;
+    }
+  }
+
+  h4 {
+    color: $white;
+  }
+
+  p {
+    margin-top: 3px;
+    color: $white-2;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .popup {
+    animation: popupAnimMobile 3s forwards ease;
+  }
+
+  @keyframes popupAnimMobile {
+    from {
+      width: 0;
+      padding: 10px 0 10px 0;
+      opacity: 0;
+      white-space: nowrap;
+    }
+
+    10% {
+      opacity: 100%;
+      width: 90%;
+      padding: 10px 45px 10px 20px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+
+    90% {
+      opacity: 100%;
+      width: 90%;
+      padding: 10px 45px 10px 20px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+
+    to {
+      opacity: 0;
+      width: 0;
+      padding: 10px 0 10px 0;
+      white-space: nowrap;
+    }
+  }
+}

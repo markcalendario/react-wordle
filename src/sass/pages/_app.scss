@@ -1,17 +1,6 @@
-nav {
-  background-color: $white;
-  text-align: center;
-  padding: 15px 0;
-
-  a {
-    color: $black-1;
-    font-size: small;
-    text-decoration: none;
-  }
-}
-
 body {
   background-color: $white-1;
+  overflow: hidden;
 }
 
 #keyboard {
@@ -85,6 +74,22 @@ body {
           justify-content: center;
           border-radius: 7%;
           border: 1px rgba($color: $black-1, $alpha: 0.2) solid;
+          animation: boxAnimStart 1s forwards;
+        }
+
+        @keyframes boxAnimStart {
+          from {
+            transform: rotateY(360deg);
+            background-color: $warn;
+          }
+
+          49% {
+            background-color: $warn;
+          }
+
+          50% {
+            background-color: $white-1
+          }
         }
 
         @for $i from 0 through 5 {

@@ -1,39 +1,51 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import texts from './5-letter-words.txt'
-import winSound from './music/win.wav'
-import loseSound from './music/lose.wav'
+import winSound from './Music/win.wav'
+import afterWinSound from './Music/after-win.mp3'
+import afterLoseSound from './Music/after-lose.mp3'
+import loseSound from './Music/lose.wav'
+import warnSound from './Music/warn.wav'
+import Navbar from "./Components/Navbar";
+import Popup from "./Components/Popup";
+import shootConfetti from "./Functions/confetti";
+import playSound from "./Functions/audio";
+
+const MAXIMUM_STACK_LEVEL = 6
 
 function App() {
-  return (
-    <div>
-      <Navbar />
-      <GuessesStack />
-    </div>
-  );
-}
-
-function Navbar() {
-  return (
-    <nav>
-      <div className="container">
-        <div className="wrapper">
-          <h2>Wordle</h2>
-          <a href="https://github.com/markcalendario/react-wordle">&copy; Mark Kenneth Calendario {new Date().getFullYear()}</a>
-        </div>
-      </div>
-    </nav>
-  )
-}
-
-function GuessesStack() {
+  const [isGameEnded, setIsGameEnded] = useState(false)
+  const [didUserGuess, setDidUserGuess] = useState(false)
   const [word, setWord] = useState(null)
-  const [isGameOnGoing, setIsGameOnGoing] = useState(true)
-  const [stackGuesses, setStackGuesses] = useState([])
 
-  const [currentGuessStackPosition, setCurrentGuessStackPosition] = useState(0)
-  const [currentColumnPosition, setCurrentColumnPosition] = useState(0)
+  const audio = useRef(new Audio())
 
   useEffect(() => {
+    if (localStorage.getItem('highestScore') === null) {
+      localStorage.setItem('highestScore', 0)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isGameEnded) {
+      setWord(null)
+      audio.current.pause()
+      return
+    }
+
+    if (didUserGuess) {
+      audio.current.src = afterWinSound
+    }
+    else {
+      audio.current.src = afterLoseSound
+    }
+
+    audio.current.loop = true
+    audio.current.load()
+    audio.current.play()
+
+  }, [isGameEnded, didUserGuess])
+
+  const fetchWord = useCallback(() => {
     fetch(texts)
       .then(response => {
         return response.text()
@@ -44,38 +56,93 @@ function GuessesStack() {
       })
   }, [])
 
-  useEffect(() => {
-    if (!word) return
-    console.log(word);
-    let stackGuessesInitializedData = []
-
-    for (let index = 0; index < 6; index++) {
-      let row = []
-
-      for (let index = 0; index < word.length; index++) {
-        row.push(null)
+  return (
+    <div>
+      <Navbar />
+      {
+        isGameEnded
+          ? <Stats
+            word={word}
+            setIsGameEnded={setIsGameEnded}
+            didUserGuess={didUserGuess}
+          />
+          : <GuessesStack
+            fetchWord={fetchWord}
+            word={word}
+            setIsGameEnded={setIsGameEnded}
+            setDidUserGuess={setDidUserGuess}
+          />
       }
-      stackGuessesInitializedData.push(row)
-    }
+    </div>
+  );
+}
 
-    setStackGuesses(stackGuessesInitializedData)
+function Stats({ setIsGameEnded, didUserGuess, word }) {
 
-  }, [word])
+  const [highestScore, setHighestScore] = useState(0)
+  const [userScore, setUserScore] = useState(0)
+  const [isUserSetNewHighScore, setIsUserSetNewHighScore] = useState(false)
 
   useEffect(() => {
-    if (!word) return
-    if (currentGuessStackPosition === 0) return
+    setHighestScore(parseInt(localStorage.getItem("highestScore")))
+    setUserScore((parseInt(localStorage.getItem("userGameTimeLength"))))
+  }, [])
 
-    if (stackGuesses[currentGuessStackPosition - 1].join('') === word) {
-      setIsGameOnGoing(false)
-      new Audio(winSound).play()
-    } else if (currentGuessStackPosition === 6) {
-      setIsGameOnGoing(false)
-      new Audio(loseSound).play()
+  useEffect(() => {
+
+    if (!didUserGuess) {
+      return
     }
-  }, [currentGuessStackPosition, word, stackGuesses])
 
-  const writeLetter = (letter) => {
+    if (userScore < highestScore || highestScore === 0) {
+      localStorage.setItem("highestScore", localStorage.getItem("userGameTimeLength"))
+      setHighestScore(userScore)
+      setIsUserSetNewHighScore(true)
+    }
+  }, [highestScore, userScore, didUserGuess])
+
+  return (
+    <div id="stats" className={didUserGuess ? "stats-win" : "stats-lose"}>
+      <div className="container">
+        <div className="wrapper">
+          <h1>{didUserGuess ? "You nailed it!" : "Better luck next time!"}</h1>
+          {
+            didUserGuess ?
+              <p>You guessed the word <strong>{word}</strong> right.</p> :
+              <p>The word is <strong>{word}</strong>.</p>
+          }
+          <div className="scores col-7">
+            <div className="score">
+              {
+                didUserGuess
+                  ? <h3>{(userScore / 1000).toFixed(2)} seconds</h3>
+                  : <h3>Did not finish</h3>
+              }
+              <p>Your Score</p>
+            </div>
+            <div className="score">
+              <h3>{(highestScore / 1000).toFixed(2)} seconds</h3>
+              <p>{isUserSetNewHighScore ? "🎉 New" : ""} High Score</p>
+            </div>
+          </div>
+          <button onClick={() => { setIsGameEnded(false) }}>Play Again</button>
+        </div>
+      </div>
+    </div >
+  )
+}
+
+function GuessesStack({ setIsGameEnded, setDidUserGuess, word, fetchWord }) {
+  const [isGameOnGoing, setIsGameOnGoing] = useState(true)
+  const [stackGuesses, setStackGuesses] = useState([])
+  const [currentGuessStackPosition, setCurrentGuessStackPosition] = useState(0)
+  const [currentColumnPosition, setCurrentColumnPosition] = useState(0)
+  const [isPopupVisible, setIsPopupVisible] = useState(false)
+  const [gameStartTime, setGameStartTime] = useState(0)
+
+  const writeLetter = useCallback((letter) => {
+    // Writes letter to a box
+    // Uses currentGuessStackPosition and currentColumnPosition for row and columns
 
     if (currentColumnPosition === word.length) return
 
@@ -83,9 +150,11 @@ function GuessesStack() {
     newStackGuessesData[currentGuessStackPosition][currentColumnPosition] = letter
     setStackGuesses(newStackGuessesData)
     setCurrentColumnPosition(prev => prev + 1)
-  }
+  }, [word, currentColumnPosition, currentGuessStackPosition, stackGuesses])
 
   const deleteLetter = () => {
+    // Deletes a letter from a current box
+
     if (currentColumnPosition === 0) return
 
     let newStackGuessesData = stackGuesses
@@ -94,13 +163,12 @@ function GuessesStack() {
   }
 
   const onPressedEnter = () => {
-    if (currentGuessStackPosition > 5) {
-      return
-    }
+    if (currentGuessStackPosition > MAXIMUM_STACK_LEVEL) return
 
     // Check if all of the boxes in a stack is fullfilled
     if (stackGuesses[currentGuessStackPosition].includes(null)) {
-      alert("Please fill all the boxes.")
+      new Audio(warnSound).play()
+      setIsPopupVisible(true)
       return
     }
 
@@ -188,9 +256,64 @@ function GuessesStack() {
     ))
   }
 
+  const initializeGuessStack = () => {
+    console.log(word);
+    if (!word) return
+
+    let stackGuessesInitializedData = []
+    for (let index = 0; index < MAXIMUM_STACK_LEVEL; index++) {
+      let row = []
+      for (let index = 0; index < word.length; index++) {
+        row.push(null)
+      }
+      stackGuessesInitializedData.push(row)
+    }
+
+    setStackGuesses(stackGuessesInitializedData)
+  }
+
+  const analyzeWinningState = () => {
+    if (!word || currentGuessStackPosition === 0) return
+    let previousStackWord = stackGuesses[currentGuessStackPosition - 1].join('')
+
+    // Win
+    if (previousStackWord === word) {
+      setIsGameOnGoing(false)
+      playSound(winSound, false)
+      localStorage.setItem("userGameTimeLength", Date.now() - gameStartTime);
+      shootConfetti(5)
+      setTimeout(() => {
+        setIsGameEnded(true)
+        setDidUserGuess(true)
+      }, 3500);
+    }
+
+    // Lose
+    else if (currentGuessStackPosition === MAXIMUM_STACK_LEVEL) {
+      setIsGameOnGoing(false)
+      playSound(loseSound, false)
+      setTimeout(() => {
+        setIsGameEnded(true)
+        setDidUserGuess(false)
+      }, 3000);
+    }
+  }
+
+  useEffect(() => {
+    setGameStartTime(Date.now())
+  }, [])
+
+  useEffect(fetchWord, [fetchWord])
+  useEffect(initializeGuessStack, [word])
+  useEffect(analyzeWinningState, [setDidUserGuess, setIsGameEnded, currentGuessStackPosition, stackGuesses, word, gameStartTime])
+
   return (
     <Fragment>
       <section id="guesses-stack">
+        {
+          isPopupVisible ?
+            <Popup visibilityControl={setIsPopupVisible} title="Oops!" text="Please fill all the boxes." /> : null
+        }
         <div className="container col-3">
           <div className="wrapper">
             {displaySubmittedGuessStack()}

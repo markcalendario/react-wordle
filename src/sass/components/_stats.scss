@@ -1,0 +1,80 @@
+#stats {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  color: $white;
+  animation: statsAnimation 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+  overflow: hidden;
+
+  @keyframes statsAnimation {
+    from {
+      transform: translate(-100%);
+    }
+
+    to {
+      transform: translate(0)
+    }
+  }
+
+
+  &.stats-win {
+    background-color: $stable;
+  }
+
+  &.stats-lose {
+    background-color: $error;
+  }
+
+  .container {
+    .wrapper {
+      padding: 100px 0;
+      animation: wrapperElementsAnimation 1.5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+
+      @keyframes wrapperElementsAnimation {
+        from {
+          transform: translateY(-100%);
+        }
+
+        50% {
+          transform: translateY(-100%);
+        }
+
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      .scores {
+        margin: 50px auto;
+
+        .score {
+          margin: 30px;
+        }
+      }
+
+      button {
+        padding: 15px 30px;
+        cursor: pointer;
+        background-color: $white;
+        color: $black;
+        animation: buttonAnimation 1s ease infinite;
+      }
+
+      @keyframes buttonAnimation {
+        from {
+          transform: scale(.95);
+        }
+
+        50% {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(.95);
+        }
+      }
+    }
+  }
+
+}
