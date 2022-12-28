@@ -5,8 +5,11 @@ export default function Navbar() {
     <nav>
       <div className="container">
         <div className="wrapper">
-          <h2>Wordle</h2>
-          <a href="https://github.com/markcalendario/react-wordle">&copy; Mark Kenneth Calendario {new Date().getFullYear()}</a>
+          <a href="https://github.com/markcalendario/react-wordle">
+            <h2>Wordle</h2>
+            <p>&copy; Mark Kenneth Calendario {new Date().getFullYear()}
+            </p>
+          </a>
         </div>
       </div>
     </nav>

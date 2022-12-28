@@ -14,7 +14,6 @@ nav {
 }
 nav a {
   color: #050505;
-  font-size: small;
   text-decoration: none;
 }
 
@@ -369,23 +368,29 @@ body {
   overflow-x: hidden;
 }
 
-#waiting-screen .container {
-  height: 100%;
-}
 #waiting-screen .container .wrapper {
   text-align: center;
-  padding: 130px 0;
+  padding: 50px 0;
 }
 #waiting-screen .container .wrapper > * {
   margin: 20px 0;
 }
-#waiting-screen .container .wrapper h1 {
-  font-size: 65px;
-}
 #waiting-screen .container .wrapper p {
   font-size: small;
 }
+#waiting-screen .container .wrapper .hero img {
+  width: 200px;
+}
+#waiting-screen .container .wrapper .hero h1 {
+  padding: 7px 0;
+  font-size: 35px;
+}
 
+@media screen and (min-width: 768px) {
+  #waiting-screen .container .wrapper .hero h1 {
+    font-size: 65px;
+  }
+}
 #keyboard {
   margin-top: 20px;
 }

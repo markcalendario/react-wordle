@@ -9,6 +9,7 @@ import Navbar from "./Components/Navbar";
 import Popup from "./Components/Popup";
 import shootConfetti from "./Functions/confetti";
 import playSound from "./Functions/audio";
+import hero from "./Images/hero.png";
 
 const MAXIMUM_STACK_LEVEL = 6
 
@@ -28,15 +29,17 @@ export default function App() {
 }
 
 function WaitingScreen({ handleUserClickStart }) {
-
-
   return (
     <section id="waiting-screen">
       <div className="container">
         <div className="wrapper">
-          <h1>Wordle</h1>
-          <p>Made with ❤ by <a href="https://github.com/markcalendario">Mark Kenneth Calendario</a></p>
+          <div className="hero">
+            <img src={hero} alt="hero" />
+            <h1>Wordle</h1>
+            <p>A recreation of the world's famous word-guessing game, wordle.</p>
+          </div>
           <button onClick={handleUserClickStart}>Start</button>
+          <p className="credits">Made with ❤ by <a href="https://github.com/markcalendario">Mark Kenneth Calendario</a></p>
         </div>
       </div>
     </section>
@@ -287,7 +290,6 @@ function GuessesStack({ setIsGameEnded, setDidUserGuess, word, fetchWord }) {
   }
 
   const initializeGuessStack = () => {
-    console.log(word);
     if (!word) return
 
     let stackGuessesInitializedData = []
