@@ -52,28 +52,6 @@
           margin: 30px;
         }
       }
-
-      button {
-        padding: 15px 30px;
-        cursor: pointer;
-        background-color: $white;
-        color: $black;
-        animation: buttonAnimation 1s ease infinite;
-      }
-
-      @keyframes buttonAnimation {
-        from {
-          transform: scale(.95);
-        }
-
-        50% {
-          transform: scale(1);
-        }
-
-        to {
-          transform: scale(.95);
-        }
-      }
     }
   }
 

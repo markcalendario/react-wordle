@@ -27,6 +27,7 @@ nav a {
   box-shadow: 1px 1px 3px rgb(93, 93, 93);
   -webkit-animation: popupAnim 3s forwards ease;
           animation: popupAnim 3s forwards ease;
+  z-index: 1;
 }
 @-webkit-keyframes popupAnim {
   from {
@@ -223,14 +224,24 @@ nav a {
 #stats .container .wrapper .scores .score {
   margin: 30px;
 }
-#stats .container .wrapper button {
+
+button {
   padding: 15px 30px;
   cursor: pointer;
   background-color: white;
   color: black;
   -webkit-animation: buttonAnimation 1s ease infinite;
           animation: buttonAnimation 1s ease infinite;
+  transition: 0.3s ease;
+  border: 1px black solid;
+  font-weight: bold;
+  text-transform: uppercase;
 }
+button:hover {
+  filter: brightness(95%);
+  letter-spacing: 10px;
+}
+
 @-webkit-keyframes buttonAnimation {
   from {
     transform: scale(0.95);
@@ -242,6 +253,7 @@ nav a {
     transform: scale(0.95);
   }
 }
+
 @keyframes buttonAnimation {
   from {
     transform: scale(0.95);
@@ -253,7 +265,6 @@ nav a {
     transform: scale(0.95);
   }
 }
-
 * {
   padding: 0;
   margin: 0;
@@ -355,7 +366,24 @@ nav a {
 }
 body {
   background-color: #fafafa;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+#waiting-screen .container {
+  height: 100%;
+}
+#waiting-screen .container .wrapper {
+  text-align: center;
+  padding: 130px 0;
+}
+#waiting-screen .container .wrapper > * {
+  margin: 20px 0;
+}
+#waiting-screen .container .wrapper h1 {
+  font-size: 65px;
+}
+#waiting-screen .container .wrapper p {
+  font-size: small;
 }
 
 #keyboard {

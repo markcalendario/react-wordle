@@ -6,6 +6,7 @@
   transform: translate(-50%);
   box-shadow: 1px 1px 3px $gray;
   animation: popupAnim 3s forwards ease;
+  z-index: 1;
 
   @keyframes popupAnim {
     from {

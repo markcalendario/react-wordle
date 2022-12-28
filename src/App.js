@@ -12,7 +12,38 @@ import playSound from "./Functions/audio";
 
 const MAXIMUM_STACK_LEVEL = 6
 
-function App() {
+export default function App() {
+  const [isUserWaiting, setIsUserWaiting] = useState(true)
+
+  const handleUserClickStart = useCallback(() => {
+    setIsUserWaiting(false)
+  }, [])
+
+  return (
+    <Fragment>
+      <Navbar />
+      {isUserWaiting ? <WaitingScreen handleUserClickStart={handleUserClickStart} /> : <GameScreen />}
+    </Fragment>
+  )
+}
+
+function WaitingScreen({ handleUserClickStart }) {
+
+
+  return (
+    <section id="waiting-screen">
+      <div className="container">
+        <div className="wrapper">
+          <h1>Wordle</h1>
+          <p>Made with ❤ by <a href="https://github.com/markcalendario">Mark Kenneth Calendario</a></p>
+          <button onClick={handleUserClickStart}>Start</button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function GameScreen() {
   const [isGameEnded, setIsGameEnded] = useState(false)
   const [didUserGuess, setDidUserGuess] = useState(false)
   const [word, setWord] = useState(null)
@@ -27,8 +58,8 @@ function App() {
 
   useEffect(() => {
     if (!isGameEnded) {
-      setWord(null)
       audio.current.pause()
+      setWord(null)
       return
     }
 
@@ -58,7 +89,6 @@ function App() {
 
   return (
     <div>
-      <Navbar />
       {
         isGameEnded
           ? <Stats
@@ -370,5 +400,3 @@ function Keyboard({ writeLetter, deleteLetter, onPressedEnter }) {
     </div>
   )
 }
-
-export default App;

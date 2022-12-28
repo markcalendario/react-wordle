@@ -1,0 +1,30 @@
+button {
+  padding: 15px 30px;
+  cursor: pointer;
+  background-color: $white;
+  color: $black;
+  animation: buttonAnimation 1s ease infinite;
+  transition: 0.3s ease;
+  border: 1px $black solid;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &:hover {
+    filter: brightness(95%);
+    letter-spacing: 10px;
+  }
+}
+
+@keyframes buttonAnimation {
+  from {
+    transform: scale(.95);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(.95);
+  }
+}
